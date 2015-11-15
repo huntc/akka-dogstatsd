@@ -14,7 +14,7 @@ object MetricsPublisher {
  * strategy of dropping them here is reasonable.
  */
 class MetricsPublisher(metricFactory: Long => Metric)
-  extends ActorPublisher[Metric] {
+    extends ActorPublisher[Metric] {
 
   override def receive: Receive = {
     case value: Int if isActive && totalDemand > 0  => onNext(metricFactory(value))

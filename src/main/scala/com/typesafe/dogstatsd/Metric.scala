@@ -21,8 +21,8 @@ sealed abstract class Metric(val name: String, val value: Long, val tags: Seq[(S
  * Record a statistic for the time taken to do something of a given aspect.
  */
 case class Timer(override val name: String,
-                 override val value: Long,
-                 override val tags: Seq[(String, Option[String])] = Seq.empty) extends Metric(name, value, tags) {
+    override val value: Long,
+    override val tags: Seq[(String, Option[String])] = Seq.empty) extends Metric(name, value, tags) {
 
   override def toString: String =
     s"$name:$value|ms${formatTags(tags)}"

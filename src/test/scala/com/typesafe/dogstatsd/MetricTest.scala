@@ -1,6 +1,6 @@
 package com.typesafe.dogstatsd
 
-import org.scalatest.{Matchers, WordSpec}
+import org.scalatest.{ Matchers, WordSpec }
 
 class MetricTest extends WordSpec with Matchers {
 
