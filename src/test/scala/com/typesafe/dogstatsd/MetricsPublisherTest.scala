@@ -11,10 +11,10 @@ class MetricsPublisherTest extends WordSpec with Matchers with ScalaFutures {
     "publish if there is demand" in {
       implicit val system = ActorSystem("reactive-tweets")
       implicit val materializer = ActorMaterializer()
-      val (metrics, result) = Source.actorPublisher(MetricsPublisher.props).toMat(Sink.head[Metric[_]])(Keep.both).run()
-      val metric = Timer("some-timer", 0)
-      metrics ! metric
-      result.futureValue shouldBe metric
+      val someMetric = MetricsPublisher.props(Timer("some-timer", _))
+      val (metrics, result) = Source.actorPublisher(someMetric).toMat(Sink.head[Metric])(Keep.both).run()
+      for (_ <- 1 to 100) metrics ! 843
+      result.futureValue shouldBe Timer("some-timer", 843)
     }
   }
 }

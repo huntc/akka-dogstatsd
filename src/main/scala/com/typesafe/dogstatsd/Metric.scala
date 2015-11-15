@@ -6,12 +6,12 @@ package com.typesafe.dogstatsd
  * @param value The value of the statistic
  * @param tags Any requisite tags
  */
-sealed abstract class Metric[T](val name: String, val value: T, val tags: Seq[(String, Option[String])]) {
+sealed abstract class Metric(val name: String, val value: Long, val tags: Seq[(String, Option[String])]) {
   protected def formatTags(tags: Seq[(String, Option[String])]): String = {
     val strings = tags
       .map {
         case (k, Some(v)) => k + ":" + v
-        case (k, None) => k
+        case (k, None)    => k
       }
     if (strings.nonEmpty) strings.mkString("|#", ",", "") else ""
   }
@@ -20,8 +20,7 @@ sealed abstract class Metric[T](val name: String, val value: T, val tags: Seq[(S
 /**
  * Record a statistic for the time taken to do something of a given aspect.
  */
-case class Timer(
-                 override val name: String,
+case class Timer(override val name: String,
                  override val value: Long,
                  override val tags: Seq[(String, Option[String])] = Seq.empty) extends Metric(name, value, tags) {
 
